@@ -17,8 +17,15 @@ public abstract class BaseArmyUnit extends BaseUnit{
     protected BaseArmyUnit(float hp, int armor, ArmorType armType, int initiative, int x, int y, DamageType dmgType, int[] baseDmg, int critChance, int accuracy) {
         super(hp, armor, armType, initiative, x, y);
         this.baseDmg = baseDmg;
+        this.dmgType = dmgType;
         this.critChance = critChance;
         this.accuracy = accuracy;
+    }
+
+    @Override
+    public String getInfo() {
+        return  String.format("%s  Damage type:%-5s  Damage range: %2d-%-2d  Crit chance: %-3d  Accuracy: %-3d",super.getInfo(), this.dmgType, this.baseDmg[0], this.baseDmg[1], this.critChance, this.accuracy);
+
     }
 
     /**

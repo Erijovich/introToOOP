@@ -9,5 +9,6 @@ public class Wizard extends Mage {
     protected Wizard(int x, int y) {
         super(HP, ARMOR, INITIATIVE, x, y, BASEDMG, CRITCHANCE, ACCURACY, MANA, MANAREG);
     }
+    public Wizard(){this(1,1);}
 }
 

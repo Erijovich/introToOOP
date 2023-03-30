@@ -33,8 +33,8 @@ public abstract class BaseUnit {
 
     /** статы юнита, классы наследника будут расширять этот метод своими уникальными значениями */
     public String getInfo() {
-        return String.format("Name: %s  Hp: %f.0  Type: %s",
-                this.name, this.hp, this.getClass().getSimpleName());
+        return String.format("Type: %-10s  Name: %-10s  Hp: %-4.0f  Armor type: %-9s  Armor: %-3d  Initiative: %-1d",
+                this.getClass().getSimpleName(), this.name, this.hp, this.armType, this.armor, this.initiative);
     }
 
     /**

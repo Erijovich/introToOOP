@@ -11,4 +11,5 @@ public class Thief extends Melee {
     protected Thief(int x, int y) {
         super(HP, ARMOR, INITIATIVE, x, y, DamageType.sharp, BASEDMG, CRITCHANCE, ACCURACY);
     }
+    public Thief(){this(1,1);}
 }

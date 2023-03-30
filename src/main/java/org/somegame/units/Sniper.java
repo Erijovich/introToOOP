@@ -7,9 +7,11 @@ public class Sniper extends Ranged {
             HP = 200, ARMOR = 100, INITIATIVE = 3, CRITCHANCE = 20, ACCURACY = 70, AMMO = 20, RANGE = 10;
     private static final int[]
             BASEDMG = new int[]{10,20};
-    protected Sniper() {
-        super(HP, ARMOR, INITIATIVE, 0, 0, BASEDMG, CRITCHANCE, ACCURACY, AMMO,  RANGE);
+    protected Sniper(int x, int y) {
+        super(HP, ARMOR, INITIATIVE, x,y, BASEDMG, CRITCHANCE, ACCURACY, AMMO,  RANGE);
     }
+
+    public Sniper(){this(1,1);}
 
     /**
      * Прицелиться:

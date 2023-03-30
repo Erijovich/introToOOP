@@ -11,6 +11,7 @@ public class Swordsman extends Melee {
     protected Swordsman(int x, int y) {
         super(HP, ARMOR, INITIATIVE, x, y, DamageType.sharp, BASEDMG, CRITCHANCE, ACCURACY);
     }
+    public Swordsman(){this(1,1);}
 
     public void raiseShield(){
         this.initiative *= 1.5;

@@ -10,6 +10,7 @@ public class Peasant extends BaseUnit {
     protected Peasant(int x, int y) {
         super(HP, ARMOR, ArmorType.unarmored, INITIATIVE, x, y);
     }
+    public Peasant(){this(1,1);}
     public void takeStuff (){
 
     }

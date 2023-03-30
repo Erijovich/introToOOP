@@ -10,4 +10,6 @@ public class Priest extends Mage {
         super(HP, ARMOR, INITIATIVE, x, y, BASEDMG, CRITCHANCE, ACCURACY, MANA, MANAREG);
         this.armType = ArmorType.unarmored;
     }
+
+    public Priest(){this(1,1);}
 }

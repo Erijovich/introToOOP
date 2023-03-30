@@ -13,11 +13,13 @@ public class Arbalester extends Ranged {
     /**
      * переопределяем тип урона на blunt, арбалетчик эффективнее против тяжёлой брони
      */
-    protected Arbalester() {
-        super(HP, ARMOR, INITIATIVE, 0, 0, BASEDMG, CRITCHANCE, ACCURACY, AMMO, RANGE);
+    protected Arbalester(int x, int y) {
+        super(HP, ARMOR, INITIATIVE, x,y, BASEDMG, CRITCHANCE, ACCURACY, AMMO, RANGE);
         this.armType = ArmorType.medium;
         this.dmgType = DamageType.blunt;
     }
+
+    public Arbalester() {this(1,1);}
 
     /**
      * Поставить болт с урановым наконечником:
