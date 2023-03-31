@@ -9,4 +9,13 @@ public enum SpellBook {
         this.power = power;
         this.cost = cost;
     }
+
+    public int getCost() {
+        return cost;
+    }
+
+    public int getPower() {
+        return power;
+    }
+
 }
