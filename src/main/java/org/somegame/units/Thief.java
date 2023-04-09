@@ -1,5 +1,6 @@
 package org.somegame.units;
 
+import org.somegame.units.service.Position;
 import org.somegame.units.unitsabstract.Melee;
 
 public class Thief extends Melee {
@@ -17,17 +18,21 @@ public class Thief extends Melee {
         BASEDMG = new int[]{10,50};
     }
 
-    protected Thief(int x, int y) {
-        super(HP, AP, INITIATIVE, x, y, DamageType.sharp, BASEDMG, CRITCHANCE, ACCURACY, EVASION);
+    protected Thief(Position pos) {
+        super(HP, AP, INITIATIVE, pos, DamageType.sharp, BASEDMG, CRITCHANCE, ACCURACY, EVASION);
     }
-    public Thief(){this(1,1);}
+//    public Thief(){this(1,1);}
+
+//    @Override
+//    public void action(List<BaseUnit> ally, List<BaseUnit> enemy) {
+//        super.action(ally, enemy);
+//    }
 
     /**
      * Режим скрытности:
      * увеличение точности, критического шанса и уклонения за счёт экстремального уменьшения здоровья и брони
      */
-    @Override
-    public void doSpecial() {
+    public void hide() {
         this.initiative *= 3;
         this.accuracy *= 2;
         this.critChance *= 1.5;
@@ -37,8 +42,7 @@ public class Thief extends Melee {
     }
 
     /** возврат к базовым настройкам */
-    @Override
-    public void undoSpecial() {
+    public void unHide() {
         this.initiative = INITIATIVE;
         this.accuracy = ACCURACY;
         this.critChance = CRITCHANCE;

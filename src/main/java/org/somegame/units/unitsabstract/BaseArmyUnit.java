@@ -1,5 +1,7 @@
 package org.somegame.units.unitsabstract;
 
+import org.somegame.units.service.Position;
+
 public abstract class BaseArmyUnit extends BaseUnit {
     /**
      * пока пусть будет так:
@@ -12,12 +14,13 @@ public abstract class BaseArmyUnit extends BaseUnit {
     protected int[] baseDmg; // диапазон сырого урона мин макс
     protected int critChance; // множитель для нанесения критического (полуторного или двойного, например) урона
     protected int accuracy; // множитель (процент) успешности атаки или промаха
-    protected int evasion; // шанс уворота от атаки
+    private static final float CRTMULT;
 
+    static {CRTMULT = 1.5f;}
 
-    protected BaseArmyUnit(float hp, int armor, ArmorType armType, int initiative, int x, int y, DamageType dmgType,
+    protected BaseArmyUnit(float hp, int armor, ArmorType armType, int initiative, Position pos, DamageType dmgType,
                            int[] baseDmg, int critChance, int accuracy, int evasion) {
-        super(hp, armor, armType, initiative, x, y);
+        super(hp, armor, armType, initiative, evasion, pos);
         this.baseDmg = baseDmg;
         this.dmgType = dmgType;
         this.critChance = critChance;
@@ -26,11 +29,49 @@ public abstract class BaseArmyUnit extends BaseUnit {
     }
 
     @Override
-    public String getInfo() {
-        return  String.format("%s  Damage: %2d-%-2d  %-5s  Crit chance: %-3d  Accuracy: %-3d Evasion: %-3d",
-                super.getInfo(), this.baseDmg[0], this.baseDmg[1], this.dmgType, this.critChance, this.accuracy, this.evasion);
-
+    public String unitInfo() {
+        return  String.format("%s  Damage: %2d-%-2d  %-5s  Crit chance: %-3d  Accuracy: %-3d",
+                super.unitInfo(), this.baseDmg[0], this.baseDmg[1], this.dmgType, this.critChance, this.accuracy);
     }
+
+    protected float calculateDamage(BaseUnit enemy){
+        if (rnd.nextInt(1, 101)
+                >= Integer.max(10, accuracy*(1-enemy.evasion/100))) // 10% гарантированный шанс попадания
+            return 0f;
+        float damage = rnd.nextInt(baseDmg[0], baseDmg[1]+1);
+        float multiplier = 1;
+        if (critChance >= rnd.nextInt(1, 101)) multiplier *= 1.5;
+     /*     sharp урон 2х, 1.5х, 1х, 0,5х против брони соответственно нетброни, лёгкая, средняя и тяжёла
+     *      blunt - наоборот против тяжёлой брони самый большой урон - Чем броня легче, тем от дубины легче увернуться
+     *      magic - проотив всех множитлеь 1х */
+
+        // это же матрица. наверняка как-то можно это в матричном типе реалитзовать, в строках тип брони
+        // в столбцах тип урона. и для моиска значения множителя просто обращаться к матрице с двумя значениями
+        switch (enemy.armType){ // сам себе усложнил =)
+            case unarmored -> {switch (dmgType){
+                case blunt -> multiplier *=0.5;
+                case sharp -> multiplier *=2;
+                case magic -> multiplier *=1;}
+            }
+            case light -> {switch (dmgType){
+                case blunt -> multiplier *=1;
+                case sharp -> multiplier *=1.5;
+                case magic -> multiplier *=1;}
+            }
+            case medium -> {switch (dmgType){
+                case blunt -> multiplier *=1.5;
+                case sharp -> multiplier *=1;
+                case magic -> multiplier *=1;}
+            }
+            case heavy -> {switch (dmgType){
+                case blunt -> multiplier *=2;
+                case sharp -> multiplier *=0.5;
+                case magic -> multiplier *=1;}
+            }
+        }
+        return damage*multiplier;
+    }
+
 
     /**
      * пока метод неверный, нужен перерасчёт урона нанесённого

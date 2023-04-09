@@ -1,5 +1,6 @@
 package org.somegame.units;
 
+import org.somegame.units.service.Position;
 import org.somegame.units.unitsabstract.Mage;
 
 public class Priest extends Mage {
@@ -19,22 +20,20 @@ public class Priest extends Mage {
         BASEDMG = new int[]{10,10};
     }
 
-    protected Priest(int x, int y) {
-        super(HP, ARMOR, INITIATIVE, x, y, BASEDMG, CRITCHANCE, ACCURACY,EVASION, MANA, MANAREG);
+    protected Priest(Position pos) {
+        super(HP, ARMOR, INITIATIVE, pos, BASEDMG, CRITCHANCE, ACCURACY,EVASION, MANA, MANAREG);
         this.armType = ArmorType.unarmored;
     }
 
-    public Priest(){this(1,1);}
+//    public Priest(){this(1,1);}
+    @Override
+    public void action(Army ally, Army enemy) {
+        super.action(ally, enemy);
+    }
 
     /**
      * Варианты: оживить, каст заклинания, бафф союзника (но как это отслеживать???)
      */
-    @Override
-    public void doSpecial() {
-    }
 
-    /** возврат к базовым настройкам */
-    @Override
-    public void undoSpecial() {
-    }
+
 }

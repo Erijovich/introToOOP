@@ -1,6 +1,7 @@
 package org.somegame.units;
 
 
+import org.somegame.units.service.Position;
 import org.somegame.units.unitsabstract.Ranged;
 
 public class Arbalester extends Ranged {
@@ -23,20 +24,24 @@ public class Arbalester extends Ranged {
     /**
      * переопределяем тип урона на blunt, арбалетчик эффективнее против тяжёлой брони
      */
-    protected Arbalester(int x, int y) {
-        super(HP, ARMOR, INITIATIVE, x,y, BASEDMG, CRITCHANCE, ACCURACY, EVASION, AMMO, RANGE);
+    protected Arbalester(Position pos) {
+        super(HP, ARMOR, INITIATIVE, pos, BASEDMG, CRITCHANCE, ACCURACY, EVASION, AMMO, RANGE);
         this.armType = ArmorType.medium;
         this.dmgType = DamageType.blunt;
     }
 
-    public Arbalester() {this(1,1);}
+//    public Arbalester() {this(1,1);}
+
+    @Override
+    public void action(Army ally, Army enemy) {
+        super.action(ally, enemy);
+    }
 
     /**
      * Поставить болт с урановым наконечником:
      * на один ход увеличение урона (baseDmg) за счёт уменьшения инициативы.
      */
-    @Override
-    public void doSpecial() {
+    public void charge() {
         this.baseDmg[0] *= 1.5;
         this.baseDmg[1] *= 1.5;
         this.initiative *= 2;
@@ -44,8 +49,7 @@ public class Arbalester extends Ranged {
     }
 
     /** возврат к базовым настройкам */
-    @Override
-    public void undoSpecial() {
+    public void unCharge() {
         this.baseDmg = BASEDMG;
         this.initiative = INITIATIVE;
         this.critChance = CRITCHANCE;

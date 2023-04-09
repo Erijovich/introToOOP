@@ -1,4 +1,4 @@
-package org.somegame.units.unitsabstract;
+package org.somegame.units.service;
 
 public enum SpellBook {
     healOne(1, 1);

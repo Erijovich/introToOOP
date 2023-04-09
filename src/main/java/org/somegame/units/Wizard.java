@@ -1,5 +1,6 @@
 package org.somegame.units;
 
+import org.somegame.units.service.Position;
 import org.somegame.units.unitsabstract.Mage;
 
 public class Wizard extends Mage {
@@ -19,23 +20,20 @@ public class Wizard extends Mage {
         BASEDMG = new int[]{5,15};
     }
 
-    protected Wizard(int x, int y) {
-        super(HP, ARMOR, INITIATIVE, x, y, BASEDMG, CRITCHANCE, ACCURACY, EVASION, MANA, MANAREG);
+    protected Wizard(Position pos) {
+        super(HP, ARMOR, INITIATIVE, pos, BASEDMG, CRITCHANCE, ACCURACY, EVASION, MANA, MANAREG);
     }
-    public Wizard(){this(1,1);}
+//    public Wizard(){this(1,1);}
+//
+//    @Override
+//    public void action(List<BaseUnit> ally, List<BaseUnit> enemy) {
+//        super.action(ally, enemy);
+//    }
 
     /**
      * варианты: дебафф врага, атака по площади, удвоение маны. А может просто каст заклинания?
      */
-    @Override
-    public void doSpecial() {
 
-    }
 
-    /** возврат к базовым настройкам */
-    @Override
-    public void undoSpecial() {
-
-    }
 }
 
