@@ -40,6 +40,8 @@ public class Main {
         Army.sortPriorityList();
         Army.getPriorityList().forEach(unit -> System.out.println(unit.unitStats()));
         Army.getPriorityList().forEach(unit ->  unit.action(armyOne,armyTwo));
+        System.out.println();
+        Army.getPriorityList().forEach(unit -> System.out.println(unit.unitStats()));
     }
 }
 
