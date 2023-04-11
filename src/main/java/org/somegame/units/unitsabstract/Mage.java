@@ -16,9 +16,15 @@ public abstract class Mage extends BaseArmyUnit{
 
     @Override
     public String unitInfo() {
-        return  String.format("%s  MP: %3d/%-3d  Mana regen: %-3dper turn",super.unitInfo(), this.mp, this.maxMp, this.mpRegSpeed);
+        return  String.format("%s MP: %3d/%-3d REG: %-3d",super.unitInfo(), this.mp, this.maxMp, this.mpRegSpeed);
     }
 
+    @Override
+    public String unitStats() {
+        return  String.format("%s MP: %3d/%-3d",super.unitStats(), this.mp, this.maxMp);
+    }
+
+    // fixme если ближайший противник на расстоянии удара , то выбор , либо отступить, либо ударить посохом // (половина урона)
     @Override
     public void action(Army ally, Army enemy) {
         if (state == State.dead) return;
@@ -26,7 +32,7 @@ public abstract class Mage extends BaseArmyUnit{
         castSpell(findNearestUnit(enemy)); // fixme продумать заклинания и на своих и на чужих
     }
 
-    public void castSpell(BaseUnit enemy) {
+    public void castSpell(BaseUnit unit) {
 
     }
 

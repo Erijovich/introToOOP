@@ -23,6 +23,11 @@ public class Thief extends Melee {
     }
 //    public Thief(){this(1,1);}
 
+    @Override
+    public String unitType() {
+        return "Thief";
+    }
+
 //    @Override
 //    public void action(List<BaseUnit> ally, List<BaseUnit> enemy) {
 //        super.action(ally, enemy);

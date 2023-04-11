@@ -5,8 +5,8 @@ import org.somegame.units.service.Position;
 
 public abstract class Ranged extends BaseArmyUnit{
 
-    int ammo, maxAmmo;
-    int range;
+    protected int ammo, maxAmmo;
+    protected int range;
 
     /**
      * тип брони - лёгкая
@@ -20,9 +20,15 @@ public abstract class Ranged extends BaseArmyUnit{
 
     @Override
     public String unitInfo() {
-        return String.format("%s  Ammo: %2d/%-2d  Range: %-2d",super.unitInfo(), this.ammo, this.maxAmmo, this.range);
+        return String.format("%s AMMO: %2d/%-2d RNG: %-2d",super.unitInfo(), this.ammo, this.maxAmmo, this.range);
     }
 
+    @Override
+    public String unitStats() {
+        return String.format("%s AMMO: %2d/%-2d",super.unitStats(), this.ammo, this.maxAmmo);
+    }
+
+    // fixme если ближайший противник на расстоянии удара , то выбор , либо отступить, либо ударить ножом (половина урона)
     @Override
     public void action(Army ally, Army enemy) {
         if (state == State.dead) return;

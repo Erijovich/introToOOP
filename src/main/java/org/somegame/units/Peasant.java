@@ -11,17 +11,32 @@ public class Peasant extends BaseUnit {
             EVASION = 5;
     private int capacity; // размер мешка для стрел
 
-    protected Peasant(Position pos) {super(HP, ARMOR, ArmorType.unarmored, INITIATIVE, EVASION, pos);}
+    protected Peasant(Position pos) {super(HP, ARMOR, ArmorType.naked, INITIATIVE, EVASION, pos);}
 //    public Peasant(){this(1,1);}
 
     public void takeStuff (){
     }
-    public void giveStuff(){
+    public void giveStuff(BaseUnit ally){
+        if (ally.unitType().equals("Snipr") || ally.unitType().equals("Arbst")) {
+
+        }
     }
 
     @Override
-    public void action(Army ally, Army enemy) {
-        super.action(ally, enemy);
+    public String unitType() {
+        return "Pesnt";
+    }
+
+    @Override
+    public void action(Army armyAlly, Army armyEnemy) {
+        int cnt = 0;
+        for (BaseUnit ally: armyAlly.getArmy()) {
+            if (position.distance(ally.getPosition()) <= 3*Math.sqrt(2)) { // крестьянин работает в радиусе трёх клеток
+                this.giveStuff(ally);
+                cnt++;
+            }
+        }
+        if (cnt < 3) move(findFarestUnit(armyAlly).getPosition()); // иди к самому дальнему другу от тебя
     }
 
 }

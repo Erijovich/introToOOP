@@ -23,10 +23,16 @@ public class Swordsman extends Melee {
     }
 //    public Swordsman(){this(1,1);}
 
+    @Override
+    public String unitType() {
+        return "Sword";
+    }
+
 //    @Override
 //    public void action(List<BaseUnit> ally, List<BaseUnit> enemy) {
 //        super.action(ally, enemy);
 //    }
+
 
     /**
      * Поднять щит:

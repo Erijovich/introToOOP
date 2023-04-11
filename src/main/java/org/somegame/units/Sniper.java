@@ -26,6 +26,11 @@ public class Sniper extends Ranged {
 
 //    public Sniper(){this(1,1);}
 
+    @Override
+    public String unitType() {
+        return "Snipr";
+    }
+
 
     @Override
     public void action(Army ally, Army enemy) {

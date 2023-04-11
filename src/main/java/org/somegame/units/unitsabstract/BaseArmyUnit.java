@@ -30,7 +30,7 @@ public abstract class BaseArmyUnit extends BaseUnit {
 
     @Override
     public String unitInfo() {
-        return  String.format("%s  Damage: %2d-%-2d  %-5s  Crit chance: %-3d  Accuracy: %-3d",
+        return  String.format("%s DMG: %2d-%-2d %-5s  CRT: %-3d ACC: %-3d",
                 super.unitInfo(), this.baseDmg[0], this.baseDmg[1], this.dmgType, this.critChance, this.accuracy);
     }
 
@@ -41,34 +41,45 @@ public abstract class BaseArmyUnit extends BaseUnit {
         float damage = rnd.nextInt(baseDmg[0], baseDmg[1]+1);
         float multiplier = 1;
         if (critChance >= rnd.nextInt(1, 101)) multiplier *= 1.5;
+
      /*     sharp урон 2х, 1.5х, 1х, 0,5х против брони соответственно нетброни, лёгкая, средняя и тяжёла
      *      blunt - наоборот против тяжёлой брони самый большой урон - Чем броня легче, тем от дубины легче увернуться
      *      magic - проотив всех множитлеь 1х */
 
         // это же матрица. наверняка как-то можно это в матричном типе реалитзовать, в строках тип брони
         // в столбцах тип урона. и для моиска значения множителя просто обращаться к матрице с двумя значениями
-        switch (enemy.armType){ // сам себе усложнил =)
-            case unarmored -> {switch (dmgType){
-                case blunt -> multiplier *=0.5;
-                case sharp -> multiplier *=2;
-                case magic -> multiplier *=1;}
-            }
-            case light -> {switch (dmgType){
-                case blunt -> multiplier *=1;
-                case sharp -> multiplier *=1.5;
-                case magic -> multiplier *=1;}
-            }
-            case medium -> {switch (dmgType){
-                case blunt -> multiplier *=1.5;
-                case sharp -> multiplier *=1;
-                case magic -> multiplier *=1;}
-            }
-            case heavy -> {switch (dmgType){
-                case blunt -> multiplier *=2;
-                case sharp -> multiplier *=0.5;
-                case magic -> multiplier *=1;}
-            }
-        }
+//        switch (enemy.armType){ // сам себе усложнил =)
+//            case naked -> {switch (dmgType){
+//                case blunt -> multiplier *=0.5;
+//                case sharp -> multiplier *=2;
+//                case magic -> multiplier *=1;}
+//            }
+//            case light -> {switch (dmgType){
+//                case blunt -> multiplier *=1;
+//                case sharp -> multiplier *=1.5;
+//                case magic -> multiplier *=1;}
+//            }
+//            case medium -> {switch (dmgType){
+//                case blunt -> multiplier *=1.5;
+//                case sharp -> multiplier *=1;
+//                case magic -> multiplier *=1;}
+//            }
+//            case heavy -> {switch (dmgType){
+//                case blunt -> multiplier *=2;
+//                case sharp -> multiplier *=0.5;
+//                case magic -> multiplier *=1;}
+//            }
+//        }
+        // ну-с.. уменьшил)
+        multiplier *= multMtrx  [switch (dmgType){
+                                    case blunt -> 0;
+                                    case sharp -> 1;
+                                    case magic -> 2;}]
+                                [switch (enemy.armType){
+                                    case naked -> 0;
+                                    case light -> 1;
+                                    case medium -> 2;
+                                    case heavy -> 3;}];
         return damage*multiplier;
     }
 

@@ -1,11 +1,15 @@
 package org.somegame.units.service;
 
 public enum SpellBook {
-    healOne(1, 1);
+    heal1(1, -1), heal10 (5,-10), heal50(15, -50),
+    ressurect (60, Float.NaN),
+    fire1(1, 5), fire10 (5, 30), fire50(15, 100);
 
-    private final int power, cost;
 
-    SpellBook(int power, int cost) {
+    private final float power;
+    private final int cost;
+
+    SpellBook(int cost, float power) {
         this.power = power;
         this.cost = cost;
     }
@@ -14,7 +18,7 @@ public enum SpellBook {
         return cost;
     }
 
-    public int getPower() {
+    public float getPower() {
         return power;
     }
 

@@ -5,12 +5,12 @@ import org.somegame.units.unitsabstract.Mage;
 
 public class Priest extends Mage {
 
-    private static final int HP, ARMOR, INITIATIVE, CRITCHANCE, ACCURACY, EVASION, MANA, MANAREG;
+    private static final int HP, AP, INITIATIVE, CRITCHANCE, ACCURACY, EVASION, MANA, MANAREG;
     private static final int[] BASEDMG;
 
     static {
         HP = 150;
-        ARMOR = 100;
+        AP = 100;
         INITIATIVE = 3;
         CRITCHANCE = 20;
         ACCURACY = 70;
@@ -21,11 +21,17 @@ public class Priest extends Mage {
     }
 
     protected Priest(Position pos) {
-        super(HP, ARMOR, INITIATIVE, pos, BASEDMG, CRITCHANCE, ACCURACY,EVASION, MANA, MANAREG);
-        this.armType = ArmorType.unarmored;
+        super(HP, AP, INITIATIVE, pos, BASEDMG, CRITCHANCE, ACCURACY,EVASION, MANA, MANAREG);
+        this.armType = ArmorType.naked;
     }
 
 //    public Priest(){this(1,1);}
+
+    @Override
+    public String unitType() {
+        return "Prist";
+    }
+
     @Override
     public void action(Army ally, Army enemy) {
         super.action(ally, enemy);

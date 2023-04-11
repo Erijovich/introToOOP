@@ -5,6 +5,7 @@ import org.somegame.units.service.Position;
 import org.somegame.units.unitsabstract.BaseUnit;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
 
@@ -13,6 +14,7 @@ public class Army {
 //    protected int size;
     protected List<BaseUnit> units;
     protected boolean side;
+    private static List<BaseUnit> priorityList = new ArrayList<>();
 
     public Army(String name, int size, boolean side) {
         this.name = name;
@@ -25,8 +27,8 @@ public class Army {
         for (int i = 0; i < size; i++) {
             Position pos = Field.nextPosition(side);
             int nextUnit;
-            if (side) nextUnit = r.nextInt(4); // первая трогйка - одна сторона, крест - ноль или десять
-            else nextUnit = r.nextInt(10,14); // начиная сдесятков - другая сторона. Можно добавлять юнитов
+            if (side) nextUnit = r.nextInt(4); // первая тройка - одна сторона, крест - ноль или десять
+            else nextUnit = r.nextInt(10,14); // начиная с десятков - другая сторона. Можно добавлять юнитов
 
             switch (nextUnit) {
                 case (1) -> units.add (new Swordsman(pos));
@@ -59,13 +61,36 @@ public class Army {
     }
 
 
+    public static List<BaseUnit> getPriorityList() {return priorityList;}
+
+    /**
+     * этот метод надо вызвать один раз после создания всех армий
+     * @param armies - любое количество армий можно добавлять
+     */
+    public static void fillPriorityList(Army ... armies) {
+        for (Army army : armies) priorityList.addAll(army.getArmy());
+    }
+    // remove from priority и add to priority
+
+    public static void sortPriorityList() {
+        priorityList.sort(new Comparator<BaseUnit>() {
+            @Override
+            public int compare(BaseUnit unit1, BaseUnit unit2) {
+                if (unit1.getInitiative() == unit2.getInitiative()) {
+                    return (int)(unit2.getHp()/unit2.getMaxHp() - unit1.getHp()/unit1.getMaxHp());
+                }
+                return unit1.getInitiative() - unit2.getInitiative();
+            }
+        });
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         units.forEach(unit -> sb.append(unit.getClass().getSimpleName())
                                 .append(" ")
                                 .append(unit.getName())
-                                .append(". "));
+                                .append(".\n"));
         return sb.toString();
     }
 }

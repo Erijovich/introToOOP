@@ -5,12 +5,12 @@ import org.somegame.units.unitsabstract.Mage;
 
 public class Wizard extends Mage {
 
-    private static final int HP, ARMOR, INITIATIVE, CRITCHANCE, ACCURACY, EVASION, MANA, MANAREG;
+    private static final int HP, AP, INITIATIVE, CRITCHANCE, ACCURACY, EVASION, MANA, MANAREG;
     private static final int[] BASEDMG;
 
     static {
         HP = 150;
-        ARMOR = 100;
+        AP = 100;
         INITIATIVE = 3;
         CRITCHANCE = 20;
         ACCURACY = 70;
@@ -21,9 +21,14 @@ public class Wizard extends Mage {
     }
 
     protected Wizard(Position pos) {
-        super(HP, ARMOR, INITIATIVE, pos, BASEDMG, CRITCHANCE, ACCURACY, EVASION, MANA, MANAREG);
+        super(HP, AP, INITIATIVE, pos, BASEDMG, CRITCHANCE, ACCURACY, EVASION, MANA, MANAREG);
     }
 //    public Wizard(){this(1,1);}
+
+    @Override
+    public String unitType() {
+        return "Wizrd";
+    }
 //
 //    @Override
 //    public void action(List<BaseUnit> ally, List<BaseUnit> enemy) {

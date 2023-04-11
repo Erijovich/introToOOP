@@ -33,6 +33,11 @@ public class Arbalester extends Ranged {
 //    public Arbalester() {this(1,1);}
 
     @Override
+    public String unitType() {
+        return "Arbst";
+    }
+
+    @Override
     public void action(Army ally, Army enemy) {
         super.action(ally, enemy);
     }

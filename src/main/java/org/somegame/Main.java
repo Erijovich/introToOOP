@@ -9,7 +9,7 @@ public class Main {
 
         System.out.println();
         int armySize = 10;
-        Field.setSize(armySize);
+        Field.setSize(armySize - 1); // fixme не нравятся цифры тут
 
         Army armyOne = new Army("Good Guys", armySize, true);
         Army armyTwo = new Army("Bad Guys", armySize, false);
@@ -19,18 +19,27 @@ public class Main {
         System.out.println(armyTwo);
         System.out.println();
 
-        armyOne.getArmy().forEach(unit -> System.out.println(unit.unitInfo()));
+//        armyOne.getArmy().forEach(unit -> System.out.println(unit.unitInfo()));
+//        System.out.println();
+//
+//        armyOne.getArmy().get(9).action(armyOne, armyTwo);
+//        System.out.println("Did some special");
+//        System.out.println(armyOne.getArmy().get(9).unitInfo());
+////
+//        Sniper s = new Sniper(new Position(0,0));
+//        System.out.println(s.getClass().getSimpleName());
+//        if (s.getClass().getSimpleName().equals("Sniper")) System.out.println("yes");
+//        else System.out.println("fock you");
+//        System.out.println(s.unitInfo());
+
+        System.out.println();
+        Army.fillPriorityList(armyOne,armyTwo);
+        Army.getPriorityList().forEach(unit -> System.out.println(unit.unitStats()));
         System.out.println();
 
-        armyOne.getArmy().get(9).action(armyOne, armyTwo);
-        System.out.println("Did some special");
-        System.out.println(armyOne.getArmy().get(9).unitInfo());
-//
-        Sniper s = new Sniper(new Position(0,0));
-        System.out.println(s.getClass().getSimpleName());
-        if (s.getClass().getSimpleName().equals("Sniper")) System.out.println("yes");
-        else System.out.println("fock you");
-        System.out.println(s.unitInfo());
+        Army.sortPriorityList();
+        Army.getPriorityList().forEach(unit -> System.out.println(unit.unitStats()));
+        Army.getPriorityList().forEach(unit ->  unit.action(armyOne,armyTwo));
     }
 }
 

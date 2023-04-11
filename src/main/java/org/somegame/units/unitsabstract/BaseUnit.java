@@ -8,8 +8,8 @@ import org.somegame.units.service.UnitsBehavior;
 import java.util.Random;
 
 public abstract class BaseUnit implements UnitsBehavior {
-    protected enum ArmorType {unarmored, light, medium, heavy}
-    protected enum State {ready, busy, dead}
+    protected enum ArmorType {naked, light, medium, heavy}
+    protected enum State {ready, busy, dead, powup}
     protected String name;
     protected float hp, maxHp;
     protected Position position;
@@ -20,9 +20,14 @@ public abstract class BaseUnit implements UnitsBehavior {
     protected State state;
 
     protected static Random rnd;
+    protected static final float[][] multMtrx;
     static {
         rnd = new Random();
+        multMtrx = new float[][]{{0.5f,  1,     1.5f,  2   }, // строки - DamageType, столбцы - ArmorType
+                                 {2,     1.5f,  1,     0.5f},
+                                 {1,     1,     1,     1   }};
     }
+
 
     protected BaseUnit(float hp, int ap, ArmorType armType, int initiative, int evasion, Position position) {
         this.name = setName();
@@ -43,13 +48,32 @@ public abstract class BaseUnit implements UnitsBehavior {
     public Position getPosition() {return position;}
     public State getState() {return state;}
     public String getName() {return name;}
+    public int getInitiative() {return initiative;}
+    public float getHp() {return hp;}
+    public float getMaxHp() {return maxHp;}
 
     /** статы юнита, классы наследника будут расширять этот метод своими уникальными значениями */
     @Override
     public String unitInfo() {
-        return String.format("%-10s  (%-11s  position: [%2d,%2d]  HP:%4.0f/%-4.0f AP: %-3d  %-9s  Evasion: %-3d  Initiative: %-1d",
-                this.name, this.getClass().getSimpleName() + ")", this.position.getX(), this.position.getY(), this.hp, this.maxHp, this.ap, this.armType, this.evasion, this.initiative);
+        return String.format("(%-5s) %-10s [%2d,%2d] HP:%4.0f/%-4.0f AP: %-3d %-6s  EVS: %-3d INT: %-1d",
+                this.unitType(), this.name, this.position.getX(), this.position.getY(), this.hp, this.maxHp, this.ap, this.armType, this.evasion, this.initiative);
     }
+
+    @Override
+    public String unitStats() {
+        return String.format("(%-5s) %-10s <%-1d %-5s> [%2d,%2d] HP:%4.0f/%-4.0f",
+                this.unitType(), this.name, this.initiative, this.state, this.position.getX(), this.position.getY(), this.hp, this.maxHp);
+    }
+    // пока сохраню старую версию вывода
+//    @Override
+//    public String unitInfo() {
+//        return String.format("(%-5s) %-10s  position: [%2d,%2d]  HP:%4.0f/%-4.0f AP: %-3d  %-9s  Evasion: %-3d  Initiative: %-1d",
+//                this.unitType(), this.name, this.position.getX(), this.position.getY(), this.hp, this.maxHp, this.ap, this.armType, this.evasion, this.initiative);
+//    }
+//    @Override
+//    public String unitType() {
+//        return "Notyp";
+//    }
 
     // TODEL maybe
     @Override
@@ -60,6 +84,11 @@ public abstract class BaseUnit implements UnitsBehavior {
     @Override
     public void action(Army ally, Army enemy) {
         System.out.println(String.format("%s %s did a special dance to mock an enemy", this.getClass().getSimpleName(), this.name));
+    }
+
+    @Override
+    public void move(Position position) {
+
     }
 
     // TODEL maybe
@@ -92,5 +121,20 @@ public abstract class BaseUnit implements UnitsBehavior {
             }
         }
         return nearestUnit;
+    }
+
+    public BaseUnit findFarestUnit(Army army) {
+        BaseUnit farestUnit = army.getUnit(0);
+        double distance = position.distance(farestUnit.getPosition()); // fixme не нравится, как выглядит
+        double maxDistance = distance;
+        for (int i = 1; i < army.getSize(); i++) {
+            if (army.getUnit(i).getState() == State.dead) continue; // если рассматриваемый юнит мертв
+            distance = position.distance(army.getUnit(i).getPosition());
+            if (maxDistance < distance) {
+                maxDistance = distance;
+                farestUnit = army.getUnit(i);
+            }
+        }
+        return farestUnit;
     }
 }
