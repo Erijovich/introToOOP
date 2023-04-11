@@ -13,6 +13,7 @@ public class Peasant extends BaseUnit {
 
     protected Peasant(Position pos) {super(HP, ARMOR, ArmorType.naked, INITIATIVE, EVASION, pos);}
 //    public Peasant(){this(1,1);}
+    // todo крестьяне тоже будут ходить и сами искать кому что чинить
 
     public void takeStuff (){
     }
