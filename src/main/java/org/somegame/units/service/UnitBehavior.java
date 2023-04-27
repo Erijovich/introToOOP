@@ -1,9 +1,8 @@
 package org.somegame.units.service;
 
 import org.somegame.units.Army;
-import org.somegame.units.unitsabstract.BaseUnit;
 
-public interface UnitsBehavior {
+public interface UnitBehavior {
 
     String unitInfo();
     String unitStats();

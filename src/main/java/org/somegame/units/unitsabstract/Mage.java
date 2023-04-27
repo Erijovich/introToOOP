@@ -35,5 +35,4 @@ public abstract class Mage extends BaseArmyUnit{
     public void castSpell(BaseUnit unit) {
 
     }
-
 }

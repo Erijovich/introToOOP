@@ -2,7 +2,10 @@ package org.somegame;
 
 import org.somegame.units.*;
 import org.somegame.units.service.Field;
-import org.somegame.units.service.Position;
+import org.somegame.units.service.View;
+
+import java.util.Scanner;
+
 
 public class Main {
     public static void main(String[] args) {
@@ -14,10 +17,10 @@ public class Main {
         Army armyOne = new Army("Good Guys", armySize, true);
         Army armyTwo = new Army("Bad Guys", armySize, false);
 
-        System.out.println(armyOne);
-        System.out.println();
-        System.out.println(armyTwo);
-        System.out.println();
+//        System.out.println(armyOne);
+//        System.out.println();
+//        System.out.println(armyTwo);
+//        System.out.println();
 
 //        armyOne.getArmy().forEach(unit -> System.out.println(unit.unitInfo()));
 //        System.out.println();
@@ -32,16 +35,46 @@ public class Main {
 //        else System.out.println("fock you");
 //        System.out.println(s.unitInfo());
 
-        System.out.println();
-        Army.fillPriorityList(armyOne,armyTwo);
-        Army.getPriorityList().forEach(unit -> System.out.println(unit.unitStats()));
-        System.out.println();
+        // ------------
+//        System.out.println();
+//        Army.fillPriorityList(armyOne,armyTwo);
+//        Army.getPriorityList().forEach(unit -> System.out.println(unit.unitStats()));
+//        System.out.println();
+//
+//        Army.sortPriorityList();
+//        Army.getPriorityList().forEach(unit -> System.out.println(unit.unitStats()));
+//        Army.getPriorityList().forEach(unit ->  { unit.action(armyOne,armyTwo);}); // if (unit.getState() == BaseUnit.State.dead) сделать isAlive() true/false
+//        System.out.println();
+//        Army.getPriorityList().forEach(unit -> System.out.println(unit.unitStats()));
 
-        Army.sortPriorityList();
-        Army.getPriorityList().forEach(unit -> System.out.println(unit.unitStats()));
-        Army.getPriorityList().forEach(unit ->  unit.action(armyOne,armyTwo));
-        System.out.println();
-        Army.getPriorityList().forEach(unit -> System.out.println(unit.unitStats()));
+
+
+        Army.fillPriorityList(armyOne,armyTwo);
+        Scanner sc = new Scanner(System.in);
+        while (armyOne.isAlive() & armyTwo.isAlive()) {
+            Army.sortPriorityList(); // выставление очередности хода
+            View.view(Army.getPriorityList(), armyOne, armyTwo);
+            sc.nextLine();
+            Army.getPriorityList().forEach(unit -> {
+                unit.action(armyOne, armyTwo);
+            }); // if (unit.getState() == BaseUnit.State.dead) сделать isAlive() true/false
+            // fixme !!! нет проверки на живого юнита
+        }
+        if (armyTwo.isAlive())System.out.println("army one win");
+        else System.out.println("army two win");
+
+
+
+//        init();
+//        Scanner input = new Scanner(System.in);
+//        while (true){
+//            allTeam = sortTeam();
+//            View.view();  // отображение в консоль
+//            input.nextLine();
+//            for (BaseHero human: allTeam) {
+//                if (holyTeam.contains(human)) human.step(holyTeam, darkTeam);
+//                else human.step(darkTeam, holyTeam);
+//            }
     }
 }
 

@@ -3,13 +3,13 @@ package org.somegame.units.unitsabstract;
 import org.somegame.units.Army;
 import org.somegame.units.service.Position;
 import org.somegame.units.service.UnitNames;
-import org.somegame.units.service.UnitsBehavior;
+import org.somegame.units.service.UnitBehavior;
 
 import java.util.Random;
 
-public abstract class BaseUnit implements UnitsBehavior {
+public abstract class BaseUnit implements UnitBehavior {
     protected enum ArmorType {naked, light, medium, heavy}
-    protected enum State {ready, busy, dead, powup}
+    public enum State {ready, busy, dead, powup}
     protected String name;
     protected float hp, maxHp;
     protected Position position;
@@ -24,7 +24,7 @@ public abstract class BaseUnit implements UnitsBehavior {
     static {
         rnd = new Random();
         multMtrx = new float[][]{{0.5f,  1,     1.5f,  2   }, // строки - DamageType, столбцы - ArmorType
-                                 {2,     1.5f,  1,     0.5f},
+                                 {2,     1.5f,  1,     0.5f}, // множитель урона
                                  {1,     1,     1,     1   }};
     }
 
@@ -122,7 +122,11 @@ public abstract class BaseUnit implements UnitsBehavior {
         }
         return nearestUnit;
     }
+    public static void someStuff() {
+        System.out.println();
+        System.out.println();
 
+    }
     public BaseUnit findFarestUnit(Army army) {
         BaseUnit farestUnit = army.getUnit(0);
         double distance = position.distance(farestUnit.getPosition()); // fixme не нравится, как выглядит

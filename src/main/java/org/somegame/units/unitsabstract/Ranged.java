@@ -34,6 +34,7 @@ public abstract class Ranged extends BaseArmyUnit{
         if (state == State.dead) return;
         if (ammo <= 0) return;
         shoot(findNearestUnit(enemy));
+        // ещё проверку на рэндж шутера. если враг дальше - шаг вперёд
     }
 
     private void shoot(BaseUnit enemy) {

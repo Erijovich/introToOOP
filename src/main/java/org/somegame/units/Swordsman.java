@@ -18,7 +18,7 @@ public class Swordsman extends Melee {
         BASEDMG = new int[]{30,40};
     }
 
-    protected Swordsman(Position pos) {
+    protected Swordsman(Position pos){
         super(HP, ARMOR, INITIATIVE, pos, DamageType.sharp, BASEDMG, CRITCHANCE, ACCURACY,EVASION);
     }
 //    public Swordsman(){this(1,1);}
@@ -31,7 +31,7 @@ public class Swordsman extends Melee {
 //    @Override
 //    public void action(List<BaseUnit> ally, List<BaseUnit> enemy) {
 //        super.action(ally, enemy);
-//    }
+//    },
 
 
     /**

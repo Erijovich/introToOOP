@@ -60,6 +60,19 @@ public class Army {
         return units;
     }
 
+    /**
+     * если нет живых в армии - возвращает ложь
+     * если хоть один живлой - возвращает истину
+     * @return
+     */
+    public boolean isAlive() {
+        for (BaseUnit unit: units) {
+            if (unit.getState() != BaseUnit.State.dead)
+                return true;
+        }
+        return false;
+    }
+
 
     public static List<BaseUnit> getPriorityList() {return priorityList;}
 

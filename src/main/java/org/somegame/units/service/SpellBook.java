@@ -6,8 +6,8 @@ public enum SpellBook {
     fire1(1, 5), fire10 (5, 30), fire50(15, 100);
 
 
-    private final float power;
     private final int cost;
+    private final float power;
 
     SpellBook(int cost, float power) {
         this.power = power;
