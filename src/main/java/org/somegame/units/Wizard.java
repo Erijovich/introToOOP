@@ -1,6 +1,6 @@
 package org.somegame.units;
 
-import org.somegame.units.service.Position;
+import org.somegame.service.Position;
 import org.somegame.units.unitsabstract.Mage;
 
 public class Wizard extends Mage {
@@ -23,7 +23,12 @@ public class Wizard extends Mage {
     protected Wizard(Position pos) {
         super(HP, AP, INITIATIVE, pos, BASEDMG, CRITCHANCE, ACCURACY, EVASION, MANA, MANAREG);
     }
-//    public Wizard(){this(1,1);}
+
+    @Override
+    public String getIcon () {
+        if (isAlive()) return "🧙";
+        else return super.getIcon();
+    }
 
     @Override
     public String unitType() {

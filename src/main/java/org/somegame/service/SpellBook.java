@@ -1,9 +1,9 @@
-package org.somegame.units.service;
+package org.somegame.service;
 
 public enum SpellBook {
-    heal1(1, -1), heal10 (5,-10), heal50(15, -50),
+    heal1(2, -1), heal10 (8,-10), heal50(25, -50),
     ressurect (60, Float.NaN),
-    fire1(1, 5), fire10 (5, 30), fire50(15, 100);
+    fire1(2, 5), fire10 (8, 30), fire50(25, 100);
 
 
     private final int cost;

@@ -1,4 +1,4 @@
-package org.somegame.units.service;
+package org.somegame.service;
 
 public class Field {
 
@@ -12,10 +12,13 @@ public class Field {
 //        aCount = bCount = 0;
 //    }
 
-    /** может потом будут НЕ квадратные поля */
+    /**
+     * может потом будут НЕ квадратные поля
+     * размер минус единица, т.к. координаты начинаем с нуля
+     */
     public static void setSize (int x, int y) {
-        xSize = x;
-        ySize = y;
+        xSize = x-1;
+        ySize = y-1;
     }
     public static void setSize (int size) {
         setSize(size,size);

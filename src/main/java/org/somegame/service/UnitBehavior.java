@@ -1,6 +1,7 @@
-package org.somegame.units.service;
+package org.somegame.service;
 
 import org.somegame.units.Army;
+import org.somegame.units.unitsabstract.BaseUnit;
 
 public interface UnitBehavior {
 
@@ -10,6 +11,11 @@ public interface UnitBehavior {
     String unitType();
     void die();
 
+    void recieveHelp();
+
+    String getIcon();
+
+
     //    void takeDamage();
 //    void action();
 
@@ -17,6 +23,6 @@ public interface UnitBehavior {
      *
      * @param position - позиция (координаты) куда надо совершить шаг
      */
-    void move(Position position);
+    void move(BaseUnit target);
 
 }

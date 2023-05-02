@@ -1,6 +1,6 @@
 package org.somegame.units;
 
-import org.somegame.units.service.Position;
+import org.somegame.service.Position;
 import org.somegame.units.unitsabstract.Melee;
 
 public class Swordsman extends Melee {
@@ -21,7 +21,12 @@ public class Swordsman extends Melee {
     protected Swordsman(Position pos){
         super(HP, ARMOR, INITIATIVE, pos, DamageType.sharp, BASEDMG, CRITCHANCE, ACCURACY,EVASION);
     }
-//    public Swordsman(){this(1,1);}
+
+    @Override
+    public String getIcon () {
+        if (isAlive()) return "\uD83E\uDD3A";
+        else return super.getIcon();
+    }
 
     @Override
     public String unitType() {

@@ -1,6 +1,6 @@
 package org.somegame.units;
 
-import org.somegame.units.service.Position;
+import org.somegame.service.Position;
 import org.somegame.units.unitsabstract.Ranged;
 
 public class Sniper extends Ranged {
@@ -24,7 +24,11 @@ public class Sniper extends Ranged {
         super(HP, ARMOR, INITIATIVE, pos, BASEDMG, CRITCHANCE, ACCURACY, EVASION, AMMO,  RANGE);
     }
 
-//    public Sniper(){this(1,1);}
+    @Override
+    public String getIcon () {
+        if (isAlive()) return "\uD83C\uDFF9";
+        else return super.getIcon();
+    }
 
     @Override
     public String unitType() {

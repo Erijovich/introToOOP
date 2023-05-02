@@ -1,6 +1,6 @@
 package org.somegame.units;
 
-import org.somegame.units.service.Position;
+import org.somegame.service.Position;
 import org.somegame.units.unitsabstract.Mage;
 
 public class Priest extends Mage {
@@ -25,7 +25,11 @@ public class Priest extends Mage {
         this.armType = ArmorType.naked;
     }
 
-//    public Priest(){this(1,1);}
+    @Override
+    public String getIcon () {
+        if (isAlive()) return "\uD83D\uDC69\uD83C\uDFFC\u200D⚕️";
+        else return super.getIcon();
+    }
 
     @Override
     public String unitType() {

@@ -1,7 +1,7 @@
 package org.somegame.units;
 
 
-import org.somegame.units.service.Position;
+import org.somegame.service.Position;
 import org.somegame.units.unitsabstract.Ranged;
 
 public class Arbalester extends Ranged {
@@ -30,7 +30,11 @@ public class Arbalester extends Ranged {
         this.dmgType = DamageType.blunt;
     }
 
-//    public Arbalester() {this(1,1);}
+    @Override
+    public String getIcon () {
+        if (isAlive()) return "\uD83D\uDD2B";
+        else return super.getIcon();
+    }
 
     @Override
     public String unitType() {

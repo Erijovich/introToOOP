@@ -1,4 +1,4 @@
-package org.somegame.units.service;
+package org.somegame.service;
 
 public class AnsiColors {
     public static final String ANSI_RESET = "\u001B[0m";

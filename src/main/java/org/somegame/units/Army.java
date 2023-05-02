@@ -1,7 +1,7 @@
 package org.somegame.units;
 
-import org.somegame.units.service.Field;
-import org.somegame.units.service.Position;
+import org.somegame.service.Field;
+import org.somegame.service.Position;
 import org.somegame.units.unitsabstract.BaseUnit;
 
 import java.util.ArrayList;
@@ -11,23 +11,20 @@ import java.util.Random;
 
 public class Army {
     public String name;
-//    protected int size;
     protected List<BaseUnit> units;
     protected boolean side;
     private static List<BaseUnit> priorityList = new ArrayList<>();
 
     public Army(String name, int size, boolean side) {
         this.name = name;
-//        this.size = size;
         this.side = side;
-
-        Random r = new Random();
         units = new ArrayList<>(size);
 
+        Random r = new Random();
         for (int i = 0; i < size; i++) {
             Position pos = Field.nextPosition(side);
             int nextUnit;
-            if (side) nextUnit = r.nextInt(4); // первая тройка - одна сторона, крест - ноль или десять
+            if (side) nextUnit = r.nextInt(4); // первая тройка - одна сторона, крестьянин - ноль или десять
             else nextUnit = r.nextInt(10,14); // начиная с десятков - другая сторона. Можно добавлять юнитов
 
             switch (nextUnit) {
@@ -43,13 +40,10 @@ public class Army {
         }
     }
 
-
     public int getSize(){return units.size();}
 
     /**
      * возвращает конкретного юнита из армии. Если индекса нет в списке - возвращает первого юнита из списка
-     * @param i
-     * @return
      */
     public BaseUnit getUnit(int i){
         if (i < 0 || i > units.size()) i = 0;
@@ -62,13 +56,11 @@ public class Army {
 
     /**
      * если нет живых в армии - возвращает ложь
-     * если хоть один живлой - возвращает истину
-     * @return
+     * если хоть один живой - возвращает истину
      */
     public boolean isAlive() {
         for (BaseUnit unit: units) {
-            if (unit.getState() != BaseUnit.State.dead)
-                return true;
+            if (unit.isAlive()) return true;
         }
         return false;
     }
@@ -78,7 +70,8 @@ public class Army {
 
     /**
      * этот метод надо вызвать один раз после создания всех армий
-     * @param armies - любое количество армий можно добавлять
+     * @param armies - любое количество армий можно добавлять.. но пока строго только две
+     * fixme side должна быть числом, если хочу нескольько армий, например по четырём сторонам
      */
     public static void fillPriorityList(Army ... armies) {
         for (Army army : armies) priorityList.addAll(army.getArmy());

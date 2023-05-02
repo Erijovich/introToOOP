@@ -1,6 +1,6 @@
 package org.somegame.units.unitsabstract;
 
-import org.somegame.units.service.Position;
+import org.somegame.service.Position;
 
 public abstract class BaseArmyUnit extends BaseUnit {
     /**

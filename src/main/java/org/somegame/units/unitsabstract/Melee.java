@@ -1,7 +1,7 @@
 package org.somegame.units.unitsabstract;
 
 import org.somegame.units.Army;
-import org.somegame.units.service.Position;
+import org.somegame.service.Position;
 
 public abstract class Melee extends BaseArmyUnit{
 
@@ -15,15 +15,15 @@ public abstract class Melee extends BaseArmyUnit{
         BaseUnit nearestEnemy = findNearestUnit(enemy);
         if (position.distance(nearestEnemy.getPosition()) <= Math.sqrt(2)) attack(nearestEnemy);
         else move(nearestEnemy);
-
     }
+
 
     private void attack (BaseUnit enemy) {
         enemy.takeDamage(calculateDamage(enemy));
     }
 
-    private void move (BaseUnit enemy) {
-
-    }
+//    private void move (BaseUnit enemy) {
+//
+//    }
 
 }

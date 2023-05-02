@@ -1,6 +1,6 @@
 package org.somegame.units;
 
-import org.somegame.units.service.Position;
+import org.somegame.service.Position;
 import org.somegame.units.unitsabstract.Melee;
 
 public class Thief extends Melee {
@@ -21,7 +21,12 @@ public class Thief extends Melee {
     protected Thief(Position pos) {
         super(HP, AP, INITIATIVE, pos, DamageType.sharp, BASEDMG, CRITCHANCE, ACCURACY, EVASION);
     }
-//    public Thief(){this(1,1);}
+
+    @Override
+    public String getIcon () {
+        if (isAlive()) return "\uD83E\uDD35";
+        else return super.getIcon();
+    }
 
     @Override
     public String unitType() {

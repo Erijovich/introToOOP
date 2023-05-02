@@ -1,4 +1,4 @@
-package org.somegame.units.service;
+package org.somegame.service;
 
 public enum UnitNames {
     Ратибор, Ярополк, Святослав, Святополк, Всеволод, Богдан, Миролюб, Светозар, Бронислав, Володимер, Горыня, Громобой, Мирослав, Творимир,

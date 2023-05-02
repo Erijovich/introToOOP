@@ -1,7 +1,8 @@
 package org.somegame.units.unitsabstract;
 
+import org.somegame.service.SpellBook;
 import org.somegame.units.Army;
-import org.somegame.units.service.Position;
+import org.somegame.service.Position;
 
 public abstract class Mage extends BaseArmyUnit{
     int mp, maxMp;
@@ -24,15 +25,45 @@ public abstract class Mage extends BaseArmyUnit{
         return  String.format("%s MP: %3d/%-3d",super.unitStats(), this.mp, this.maxMp);
     }
 
+    /**
+     * магический класс три раза кидает "кубик" размера своего текущего количества маны
+     *
+     */
     // fixme если ближайший противник на расстоянии удара , то выбор , либо отступить, либо ударить посохом // (половина урона)
+    // fixme пока спелбук не используется. заклинания только базовые используются/  и нет выбора наиболее раненого союзника, например
     @Override
     public void action(Army ally, Army enemy) {
         if (state == State.dead) return;
-        if (mp == 0)             return;
-        castSpell(findNearestUnit(enemy)); // fixme продумать заклинания и на своих и на чужих
+        this.mp = Math.min(mp+mpRegSpeed, maxMp);
+        int chooseCast = rnd.nextInt(3);
+        if (mp>=25) {
+            switch (chooseCast) {
+                case 0:
+                    float leastHp = 1000;
+                    BaseUnit unitToHeal = null;
+                    for (BaseUnit unit : ally.getArmy()) {
+                        if (unit.isAlive()) {
+                            if (unit.getHp() < leastHp) {
+                                leastHp = Math.min(leastHp, unit.getHp());
+                                unitToHeal = unit;
+                            }
+                        }
+                    }
+                    unitToHeal.takeDamage(SpellBook.heal10.getPower());
+                    mp -= SpellBook.heal50.getCost();
+                    break;
+                case 1:
+                    findNearestUnit(enemy).takeDamage(SpellBook.fire10.getPower());
+                    mp -= SpellBook.fire50.getCost();
+                    break;
+                default:
+                    break;
+            }
+        }
+//        castSpell(findNearestUnit(enemy)); // fixme продумать заклинания и на своих и на чужих
     }
 
-    public void castSpell(BaseUnit unit) {
-
-    }
+//    public void castSpell(BaseUnit unit) {
+//
+//    }
 }

@@ -1,6 +1,6 @@
 package org.somegame.units;
 
-import org.somegame.units.service.Position;
+import org.somegame.service.Position;
 import org.somegame.units.unitsabstract.BaseUnit;
 
 public class Peasant extends BaseUnit {
@@ -12,7 +12,13 @@ public class Peasant extends BaseUnit {
     private int capacity; // размер мешка для стрел
 
     protected Peasant(Position pos) {super(HP, ARMOR, ArmorType.naked, INITIATIVE, EVASION, pos);}
-//    public Peasant(){this(1,1);}
+
+    @Override
+    public String getIcon () {
+        if (isAlive()) return "\uD83D\uDC77\u200D";
+        else return super.getIcon();
+    }
+
     // todo крестьяне тоже будут ходить и сами искать кому что чинить
 
     public void takeStuff (){
@@ -30,14 +36,14 @@ public class Peasant extends BaseUnit {
 
     @Override
     public void action(Army armyAlly, Army armyEnemy) {
-        int cnt = 0;
+        int cnt = 0; // количество действий, которое крест совершает (дать стрелу, дать зелье маны, починить броню
         for (BaseUnit ally: armyAlly.getArmy()) {
             if (position.distance(ally.getPosition()) <= 3*Math.sqrt(2)) { // крестьянин работает в радиусе трёх клеток
                 this.giveStuff(ally);
                 cnt++;
             }
         }
-        if (cnt < 3) move(findFarestUnit(armyAlly).getPosition()); // иди к самому дальнему другу от тебя
+        if (cnt < 2) move(findFarestUnit(armyAlly)); // иди к самому дальнему другу от тебя, если действия остались, а рядом никого нет (пока у него только два действия)
     }
 
 }

@@ -1,7 +1,7 @@
 package org.somegame.units.unitsabstract;
 
 import org.somegame.units.Army;
-import org.somegame.units.service.Position;
+import org.somegame.service.Position;
 
 public abstract class Ranged extends BaseArmyUnit{
 
@@ -40,6 +40,11 @@ public abstract class Ranged extends BaseArmyUnit{
     private void shoot(BaseUnit enemy) {
         enemy.takeDamage(calculateDamage(enemy));
         ammo--;
+    }
+
+    @Override
+    public void recieveHelp () {
+        this.ammo++;
     }
 
     public int getAmmo(){return this.ammo;}
